@@ -10,9 +10,9 @@ var enemyAttack = 12;
 
 
 var fight = function fight (enemyName) {
-    window.alert ("Welcome to Robot Gladiators!");
+
+    var promptFight = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose");
     while (enemyHealth > 0 && playerHealth > 0) {
-        var promptFight = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose");
         if (promptFight === "skip" || promptFight === "SKIP") {
             window.alert (playerName + "has chosen to skip the fight");
             var confirmSkip = window.confirm ("Are you sure you'd like to quit?");
@@ -44,16 +44,45 @@ var fight = function fight (enemyName) {
         };
     };
 };
+var startGame = function () {
+    playerHealth = 100;
+    playerMoney = 10;
+    playerAttack = 10;
+    for (var i = 0; i < enemyNames.length; i++) {
+        if (playerHealth > 0) {
+            window.alert ("Welcome to Robot Gladiators! Round " + (i + 1))
+            var pickedEnemyName = enemyNames[i];
+            enemyHealth = 50;
+            fight(pickedEnemyName);
+        }
+        else {
+            window.alert ("You have lost your robot in battle! Game Over!");
+            break;
+        };
+    };
+    endGame ();
+};
 
-for (var i = 0; i < enemyNames.length; i++) {
+
+
+var endGame = function () {
     if (playerHealth > 0) {
-        window.alert ("Welcome to Robot Gladiators! Round " + (i + 1))
-        var pickedEnemyName = enemyNames[i];
-        enemyHealth = 50;
-        fight(pickedEnemyName);
+        window.alert ("Great Job! You've survived the game. You have a score of " + playerMoney + ".");
     }
     else {
-        window.alert ("You have lost your robot in battle! Game Over!");
-        break;
-    }
+        window.alert ("You've lost your robot in battle!");
+    };
 };
+
+
+
+var playAgainConfirm = window.confirm ("Would you like to play again?");
+
+if (playAgainConfirm) {
+    startGame ()
+}
+else {
+    window.alert ("Thank you for playing Robot Gladiators! Come back soon!")
+};
+
+startGame ();
