@@ -1,5 +1,5 @@
 var playerInfo = {
-    name: window.prompt("What is your robots name")
+    name: window.prompt("What is your robots name"),
     health: 100,
     attack: 10,
     money: 10,
@@ -30,15 +30,15 @@ var playerInfo = {
 
 var enemyInfo = [
     {
-        name: "Roborto"
+        name: "Roborto",
         attack: 12
-    }
+    },
     {
-        name: "Amy Android"
+        name: "Amy Android",
         attack: 13
-    }
+    },
     {
-        name: "Robo Trumble"
+        name: "Robo Trumble",
         attack: 14
     }
 ];
