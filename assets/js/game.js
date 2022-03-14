@@ -12,8 +12,20 @@ var fight = function fight () {
     window.alert ("Welcome to Robot Gladiators!");
     enemyHealth = enemyHealth - playerAttack;
     console.log (playerName + "attacked" + enemyName + "." + enemyName + "health is now" + enemyHealth);
-    playerHealth = playerHealth - enemyAttack
-    console.log (enemyName + "attacked" + playerName + "." + playerName + "health is now" + playerHealth)
+    if (enemyHealth <=0) {
+        window.alert (enemyName + "has died!")
+    }
+    else {
+        window.alert (enemyName + "has" + enemyHealth + "health left")
+    };
+    playerHealth = playerHealth - enemyAttack;
+    console.log (enemyName + "attacked" + playerName + "." + playerName + "health is now" + playerHealth);
+    if (playerHealth <= 0) {
+        window.alert (playerName + "has died!")
+    }
+    else {
+        window.alert (playerName + "has" + playerHealth + "health left")
+    };
 };
 
 fight ();
