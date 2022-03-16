@@ -155,9 +155,19 @@ var startGame = function () {
 
 
 var endGame = function () {
-    window.alert ("The game has now ended. Let'see how you did!")
+    var highscore = localStorage.getItem("highscore");
+    if (!highscore) {
+        highscore = 0
+    }
+    window.alert ("The game has now ended. Let'see how you did!");
     if (playerInfo.health > 0) {
-        window.alert ("Great Job! You've survived the game. You have a score of " + playerInfo.money + ".");
+        if (playerInfo.money > highscore) {
+            window.alert ("Congratulations! " + playerInfo.name  + " has beat the high score! The current high score is " + highscore + ". Your score is " + playerInfo.money );
+            localStorage.setItem ("name", playerInfo.name)
+            localStorage.setItem ("score", playerInfo.money);
+        }else {
+            window.alert (playerInfo + " didn't beat the current highscore of " + highscore);
+        }
     }
     else {
         window.alert ("You've lost your robot in battle!");
@@ -168,7 +178,7 @@ var endGame = function () {
         startGame ();
     }
     else {
-        window.alert ("Thank you for playing Robot Gladiators! Come back soon!")
+        window.alert ("Thank you for playing Robot Gladiators! Come back soon!");
     }
 };
 
