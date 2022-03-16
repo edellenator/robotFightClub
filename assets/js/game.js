@@ -19,12 +19,20 @@ var playerInfo = {
         this.money = 10
     },
     refillHealth: function () {
+        if (playerInfo.money >= 7) {
         this.health += 20;
         this.money -= 7;
+        }else{
+            window.alert ("You don't have enough money.")
+        }
     },
     upgradeAttack: function () {
+        if (playerInfo.money >=7) {
         this.attack += 6;
         this.money -=7;
+        }else{
+            window.alert("You don't have enough money.")
+        }
     }
 }
 
@@ -60,28 +68,33 @@ var randomNumber = function (min, max) {
 };
 
 
-var fight = function fight (enemy) {
-    console.log (enemy)
-    var fightOrSkip = function() {
-        var promptFight = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose");
-        promptFight = promptFight.toLowerCase()
-        if (!promptFight) {
-            window.alert ("You need to select a valid option")
-            return fightOrSkip();
-        }
-        if (promptFight === "skip") {
-            window.alert (playerInfo.name + "has chosen to skip the fight");
-            var confirmSkip = window.confirm ("Are you sure you'd like to quit?");
-            if (confirmSkip) {
-                window.alert (playerInfo.name + "has decided to leave the fight. Goodbye!");
-                playerInfo.money = Math.max (0, playerInfo.money - 10);
-                console.log ("player money", playerInfo.money);
-                shop();
-            }
+var fightOrSkip = function() {
+    var promptFight = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose");
+    promptFight = promptFight.toLowerCase()
+    if (!promptFight) {
+        window.alert ("You need to select a valid option")
+        return fightOrSkip();
+    }
+    if (promptFight === "skip") {
+        window.alert (playerInfo.name + "has chosen to skip the fight");
+        var confirmSkip = window.confirm ("Are you sure you'd like to quit?");
+        if (confirmSkip) {
+            window.alert (playerInfo.name + "has decided to leave the fight. Goodbye!");
+            playerInfo.money = Math.max (0, playerInfo.money - 10);
+            console.log ("player money", playerInfo.money);
+            
+            return true;
         }
     }
+    return false;
+}
+
+var fight = function fight (enemy) {
+    console.log (enemy);
     while (enemy.health > 0 && playerInfo.health > 0) {
-        fightOrSkip ();
+        if (fightOrSkip ()) {
+            break;
+        };
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
         enemy.health = Math.max(0, enemy.health - damage);
         console.log (playerInfo.name + " attacked " + enemy.name + "." + enemy.name + " health is now " + enemy.health);
@@ -152,33 +165,18 @@ var endGame = function () {
 };
 
 var shop = function () {
-    var shopOptionPrompt = window.prompt ('Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store. Please enter one: REFFILL, UPGRADE, or LEAVE to make a choice');
+    var shopOptionPrompt = window.prompt ('Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store. Please enter 1 to REFFILL,  2 to UPGRADE, or 3 to LEAVE');
+    shopOptionPrompt = ~~shopOptionPrompt
     switch (shopOptionPrompt) {
-        case "REFILL":
-        case "refill":
-            if (playerInfo.money >= 7) {
-                window.alert ("Refilling player's health by 20 for 7 dollars");
-
-                playerInfo.refillHealth();
-
-            } else {
-                window.alert ("You don't have enough money");
-            };
+        case 1:
+            playerInfo.refillHealth();
+            break;    
+        case 2:
+            playerInfo.upgradeAttack();
             break;
-        case "UPGRADE":    
-        case "upgrade":
-            if (playerInfo.money >= 7) {
-                window.alert ("Upgrading player attack by 6 for 7 dollars");
-
-                playerInfo.upgradeAttack()
-            } else {
-                window.alert ("You don't have enough money")
-            }
+        case 3:
+            window.alert ("Leaving the store");
             break;
-        case "LEAVE":
-        case "leave":
-                window.alert ("Leaving the store");
-                break;
 
         default:
             window.alert ("You did not pick a valid option, please choose again");
